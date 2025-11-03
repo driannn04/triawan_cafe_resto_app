@@ -1,3 +1,4 @@
+// lib/pages/home_page.dart
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:provider/provider.dart';
@@ -278,8 +279,9 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                               width: isActive ? 10 : 6,
                               height: isActive ? 10 : 6,
                               decoration: BoxDecoration(
-                                color:
-                                    isActive ? Colors.brown.shade400 : Colors.white24,
+                                color: isActive
+                                    ? Colors.brown.shade400
+                                    : Colors.white24,
                                 shape: BoxShape.circle,
                               ),
                             );
@@ -352,7 +354,6 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                             return MenuCard(
                               menu: menus[index],
                               onAddToCart: () {
-                                cart.addItem(menus[index]);
                                 _triggerCartAnim();
                                 _showAddSnack(context, menus[index].name);
                               },

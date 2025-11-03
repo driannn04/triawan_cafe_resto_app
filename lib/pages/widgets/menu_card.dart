@@ -1,3 +1,4 @@
+// lib/pages/widgets/menu_card.dart
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../models/menu_model.dart';
@@ -123,18 +124,19 @@ class _MenuCardState extends State<MenuCard> with SingleTickerProviderStateMixin
 
                 const Spacer(),
 
-                // 🔸 Tombol bawah
+                // 🔸 Bagian bawah: + - dan Detail
                 Padding(
                   padding: const EdgeInsets.only(bottom: 6, left: 4, right: 4),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       // 🔹 Tombol + -
                       Row(
                         children: [
                           IconButton(
                             icon: const Icon(Icons.remove_circle_outline,
-                                color: Colors.white70),
+                                color: Colors.white70, size: 22),
                             onPressed: () => Provider.of<CartProvider>(context, listen: false)
                                 .removeItem(menu),
                           ),
@@ -144,7 +146,7 @@ class _MenuCardState extends State<MenuCard> with SingleTickerProviderStateMixin
                           ),
                           IconButton(
                             icon: const Icon(Icons.add_circle_outline,
-                                color: Colors.white70),
+                                color: Colors.white70, size: 22),
                             onPressed: () {
                               Provider.of<CartProvider>(context, listen: false)
                                   .addItem(menu);
@@ -154,26 +156,32 @@ class _MenuCardState extends State<MenuCard> with SingleTickerProviderStateMixin
                         ],
                       ),
 
-                      // 🔹 Tombol Detail
-                      ElevatedButton(
-                        onPressed: () => _showDetail(context),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFF8B5E3C),
-                          padding:
-                              const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
-                          elevation: 4,
-                          shadowColor: Colors.brown.shade300.withOpacity(0.4),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
+                      const Spacer(),
+
+                      // 🔹 Tombol Detail (presisi & rapi)
+                      SizedBox(
+                        height: 36,
+                        child: ElevatedButton(
+                          onPressed: () => _showDetail(context),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: const Color(0xFF8B5E3C),
+                            padding: const EdgeInsets.symmetric(horizontal: 14),
+                            minimumSize: Size.zero,
+                            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                            elevation: 3,
+                            shadowColor: Colors.brown.shade300.withOpacity(0.4),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
                           ),
-                        ),
-                        child: const Text(
-                          "Detail",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 13,
-                            fontFamily: 'Poppins',
-                            fontWeight: FontWeight.w500,
+                          child: const Text(
+                            "Detail",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 13,
+                              fontFamily: 'Poppins',
+                              fontWeight: FontWeight.w500,
+                            ),
                           ),
                         ),
                       ),
