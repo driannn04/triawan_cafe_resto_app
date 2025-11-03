@@ -7,6 +7,15 @@ class CartProvider extends ChangeNotifier {
 
   Map<Menu, int> get items => _items;
 
+  /// 🔸 Total semua item di keranjang
+  int get totalItems {
+    int total = 0;
+    for (var qty in _items.values) {
+      total += qty;
+    }
+    return total;
+  }
+
   void addItem(Menu menu) {
     addItemWithQuantity(menu, 1);
   }

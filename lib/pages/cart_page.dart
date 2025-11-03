@@ -22,7 +22,7 @@ class _CartPageState extends State<CartPage> {
     final items = cart.items.entries.toList();
 
     return Scaffold(
-      backgroundColor: const Color(0xFF0D0D0D),
+      backgroundColor: const Color(0xFF2B1B12), // ☕ Warm espresso background
       appBar: AppBar(
         title: const Text(
           "Keranjang",
@@ -32,8 +32,8 @@ class _CartPageState extends State<CartPage> {
           ),
         ),
         centerTitle: true,
-        backgroundColor: Colors.black,
-        elevation: 0,
+        backgroundColor: const Color(0xFF3A2314),
+        elevation: 3,
       ),
       body: items.isEmpty
           ? const Center(
@@ -44,9 +44,8 @@ class _CartPageState extends State<CartPage> {
             )
           : Stack(
               children: [
-                // daftar item
                 Padding(
-                  padding: const EdgeInsets.only(bottom: 220),
+                  padding: const EdgeInsets.only(bottom: 200),
                   child: ListView.separated(
                     physics: const BouncingScrollPhysics(),
                     padding: const EdgeInsets.all(16),
@@ -55,14 +54,17 @@ class _CartPageState extends State<CartPage> {
                     itemBuilder: (context, i) {
                       final menu = items[i].key;
                       final qty = items[i].value;
+
                       return Container(
                         decoration: BoxDecoration(
-                          color: const Color(0xFF1E1E1E),
-                          borderRadius: BorderRadius.circular(14),
+                          color: const Color(0xFF3A2314),
+                          borderRadius: BorderRadius.circular(16),
+                          border: Border.all(
+                              color: Colors.brown.shade300.withOpacity(0.4)),
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.black.withOpacity(0.3),
-                              blurRadius: 6,
+                              color: Colors.black.withOpacity(0.35),
+                              blurRadius: 8,
                               offset: const Offset(0, 3),
                             ),
                           ],
@@ -70,7 +72,7 @@ class _CartPageState extends State<CartPage> {
                         child: ListTile(
                           contentPadding: const EdgeInsets.all(10),
                           leading: ClipRRect(
-                            borderRadius: BorderRadius.circular(8),
+                            borderRadius: BorderRadius.circular(10),
                             child: Image.network(
                               menu.imageUrl.isEmpty
                                   ? 'https://picsum.photos/80'
@@ -83,12 +85,17 @@ class _CartPageState extends State<CartPage> {
                           title: Text(
                             menu.name,
                             style: const TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold),
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Poppins',
+                            ),
                           ),
                           subtitle: Text(
                             "Rp ${menu.price.toStringAsFixed(0)} x $qty",
-                            style: const TextStyle(color: Colors.white60),
+                            style: const TextStyle(
+                              color: Colors.white70,
+                              fontFamily: 'Poppins',
+                            ),
                           ),
                           trailing: Row(
                             mainAxisSize: MainAxisSize.min,
@@ -101,7 +108,10 @@ class _CartPageState extends State<CartPage> {
                               Text(
                                 qty.toString(),
                                 style: const TextStyle(
-                                    color: Colors.white, fontSize: 16),
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                  fontFamily: 'Poppins',
+                                ),
                               ),
                               IconButton(
                                 onPressed: () => cart.addItem(menu),
@@ -116,42 +126,42 @@ class _CartPageState extends State<CartPage> {
                   ),
                 ),
 
-                // 🔹 total + metode pembayaran + tombol pesan
+                // 🟤 Total dan tombol bawah
                 Positioned(
                   left: 0,
                   right: 0,
-                  bottom: 70, // 🟤 naik sedikit agar tak tenggelam
+                  bottom: 75,
                   child: Container(
                     margin: const EdgeInsets.symmetric(horizontal: 16),
                     padding: const EdgeInsets.all(18),
                     decoration: BoxDecoration(
-                      color: const Color(0xFF1E1E1E),
-                      borderRadius: BorderRadius.circular(16),
+                      color: const Color(0xFF3A2314),
+                      borderRadius: BorderRadius.circular(18),
                       boxShadow: [
                         BoxShadow(
                           color: Colors.black.withOpacity(0.4),
-                          blurRadius: 8,
-                          offset: const Offset(0, -2),
+                          blurRadius: 10,
+                          offset: const Offset(0, -3),
                         ),
                       ],
                     ),
                     child: Column(
-                      mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            const Text(
-                              "Total:",
-                              style: TextStyle(
-                                  color: Colors.white70, fontSize: 16),
-                            ),
+                            const Text("Total:",
+                                style: TextStyle(
+                                    color: Colors.white70,
+                                    fontSize: 16,
+                                    fontFamily: 'Poppins')),
                             Text(
                               "Rp ${cart.totalPrice.toStringAsFixed(0)}",
                               style: const TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
+                                fontFamily: 'Poppins',
                                 color: Color(0xFFD6A86A),
                               ),
                             ),
@@ -159,41 +169,39 @@ class _CartPageState extends State<CartPage> {
                         ),
                         const SizedBox(height: 16),
 
-                        // metode pembayaran (Cash)
+                        // Dropdown pembayaran
                         Container(
                           padding: const EdgeInsets.symmetric(horizontal: 14),
                           decoration: BoxDecoration(
                             color: Colors.white10,
-                            borderRadius: BorderRadius.circular(10),
+                            borderRadius: BorderRadius.circular(12),
                             border:
                                 Border.all(color: Colors.white24, width: 1),
                           ),
                           child: DropdownButtonHideUnderline(
                             child: DropdownButton<String>(
-                              dropdownColor: const Color(0xFF1E1E1E),
+                              dropdownColor: const Color(0xFF3A2314),
                               value: _paymentMethod,
                               items: const [
                                 DropdownMenuItem(
                                   value: "Cash",
                                   child: Text("Cash",
-                                      style: TextStyle(color: Colors.white)),
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontFamily: 'Poppins')),
                                 ),
                               ],
-                              onChanged: (v) {
-                                setState(() => _paymentMethod = v!);
-                              },
+                              onChanged: (v) =>
+                                  setState(() => _paymentMethod = v!),
                               icon: const Icon(Icons.arrow_drop_down,
-                                  color: Colors.white),
-                              style: const TextStyle(
-                                  color: Colors.white, fontFamily: 'Poppins'),
+                                  color: Colors.white70),
                             ),
                           ),
                         ),
-
-                        const SizedBox(height: 14),
+                        const SizedBox(height: 18),
 
                         SizedBox(
-                          height: 54,
+                          height: 55,
                           child: ElevatedButton.icon(
                             onPressed: () async {
                               try {
@@ -223,7 +231,13 @@ class _CartPageState extends State<CartPage> {
                                 if (!context.mounted) return;
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
-                                    content: Text("Gagal memesan: $e"),
+                                    backgroundColor: Colors.redAccent.shade200,
+                                    content: Text(
+                                      "Gagal memesan: $e",
+                                      style: const TextStyle(
+                                          color: Colors.white,
+                                          fontFamily: 'Poppins'),
+                                    ),
                                   ),
                                 );
                               }
@@ -237,7 +251,7 @@ class _CartPageState extends State<CartPage> {
                                   fontFamily: 'Poppins'),
                             ),
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.brown.shade400,
+                              backgroundColor: const Color(0xFF8B5E3C),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(14),
                               ),
